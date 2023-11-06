@@ -16,6 +16,11 @@ find_package(ament_cmake REQUIRED)
 # further dependencies manually.
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "srv/StringMod.srv"  
+)
 
 add_executable(talker src/publisher_member_function.cpp)
 ament_target_dependencies(talker rclcpp std_msgs)
@@ -26,7 +31,13 @@ ament_target_dependencies(listener rclcpp std_msgs)
 install(TARGETS
   talker
   listener
+  server
   DESTINATION lib/${PROJECT_NAME})
+
+rosidl_target_interfaces(server 
+${PROJECT_NAME} "rosidl_typesupport_cpp")
+rosidl_target_interfaces(talker 
+${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -40,4 +51,5 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+ament_export_dependencies(rosidl_default_runtime)
 ament_package()

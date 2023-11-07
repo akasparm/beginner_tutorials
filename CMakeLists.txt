@@ -28,7 +28,7 @@ ament_target_dependencies(talker rclcpp std_msgs)
 add_executable(listener src/subscriber_member_function.cpp)
 ament_target_dependencies(listener rclcpp std_msgs)
 
-add_executable(server src/modify_msg_server.cpp)
+add_executable(server src/server.cpp)
 ament_target_dependencies(server rclcpp std_msgs)
 
 install(TARGETS

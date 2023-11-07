@@ -1,4 +1,3 @@
-
 #include <cpp_pubsub/srv/modify_msg.hpp>
 #include <cstdlib>
 #include <iterator>
@@ -7,7 +6,7 @@
 #include <string>
 #include <vector>
 
-using StringMod = cpp_pubsub::srv::StringMod;
+using ModifyMsg = cpp_pubsub::srv::ModifyMsg;
 
 /**
  * @brief Function to process the request, i.e., to promt a msg that the string
@@ -16,8 +15,8 @@ using StringMod = cpp_pubsub::srv::StringMod;
  * @param request
  * @param response
  */
-void add(const std::shared_ptr<StringMod::Request> request,
-         std::shared_ptr<StringMod::Response> response) {
+void add(const std::shared_ptr<ModifyMsg::Request> request,
+         std::shared_ptr<ModifyMsg::Response> response) {
   response->c = request->a + " " + request->b + " have been added.";
 }
 
@@ -33,8 +32,8 @@ int main(int argc, char **argv) {
   std::shared_ptr<rclcpp::Node> node =
       rclcpp::Node::make_shared("modify_msg_server");
 
-  rclcpp::Service<StringMod>::SharedPtr service =
-      node->create_service<StringMod>("modify_msg", &add);
+  rclcpp::Service<ModifyMsg>::SharedPtr service =
+      node->create_service<ModifyMsg>("modify_msg", &add);
 
   RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Modifying Msg");
 

@@ -19,7 +19,7 @@ find_package(std_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "srv/StringMod.srv"  
+  "srv/ModifyMsg.srv"  
 )
 
 add_executable(talker src/publisher_member_function.cpp)

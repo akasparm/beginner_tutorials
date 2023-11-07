@@ -24,7 +24,7 @@
 using std::placeholders::_1;
 using namespace std::chrono_literals;
 
-using sharedFuture = rclcpp::Client<cpp_pubsub::srv::ModifyMsg>::SharedFuture;
+using sharedFuture = rclcpp::Client<cpp_pubsub::srv::StringMod>::SharedFuture;
 
 
 class MinimalPublisher : public rclcpp::Node {
@@ -53,7 +53,7 @@ class MinimalPublisher : public rclcpp::Node {
     timer_ = this->create_wall_timer(
         delta, std::bind(&MinimalPublisher::timer_callback, this));
 
-    client = this->create_client<cpp_pubsub::srv::ModifyMsg>("modify_msg");
+    client = this->create_client<cpp_pubsub::srv::StringMod>("modify_msg");
     RCLCPP_DEBUG(this->get_logger(), "Client created");
     while (!client->wait_for_service(1s)) {
       if (!rclcpp::ok()) {

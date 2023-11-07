@@ -1,65 +1,142 @@
-# ROS2 CPP Publisher and Subscriber Tutorial
+# ROS2 Publisher and Subscriber
 
-## Overview
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-The primary functionality of this package is to publish custom string messages.
+  
+
+ROS2 beginner tutorial practice assignment for ENPM808X course at University of Maryland.
+
+  
+
+## Task
+
+- Modify the publisher node to publish a custom string message
+
+- Modify the tutorial code to follow Google C++ Style Guide (with course modifications)
+
+- Run cpplint on your ROS package files and save the output as a text file to the results folder
+
+- Run cppcheck on your ROS package files and save the output as a text file to the results folder
+
+  
 
 ## Dependencies
 
-Before running this package on a third-party system, make sure that the following prerequisites are met:
+- rclcpp
 
-- Ubuntu 22.04
-- ROS 2 Humble
-- Your ROS 2 workspace is set up correctly
+- stdmsgs
 
-## Build and Run Instructions
+- OS: Ubuntu Linux 22.04
 
-1. **Clone Package**
+- ROS Version: ROS2 Humble Hawksbill
 
-   You can obtain the package by either cloning the repository or copying it to your ROS 2 workspace. Make sure to place it in the `src` directory of your workspace.
+  
 
-   ```sh
-   cd ~/ros2_ws/src
-   # or Give path to your original ros2 workspace directory
+## Build Instructions
 
-   git clone https://github.com/akasparm/beginner_tutorials.git
-   ```
+  
 
-2. **Build the Package**
+Navigate to the source folder of the ROS2 workspace
 
-    Navigate to your ROS 2 workspace and build the package using colcon.
+```sh
+cd ~/ros2_ws/src
+```
 
-    ```sh
-    mv beginner_tutorials cpp_pubsub
-    cd cpp_pubsub
-    source /opt/ros/humble/setup.bash
-    cd ~/ros2_ws
-    colcon build --packages-select cpp_pubsub
-    ```
+Clone the GitHub repository
 
-3. **Source the Workspace**
-    Source the ROS 2 workspace to set the environment for the package.
+```sh
+git clone https://github.com/akasparm/beginner_tutorials.git
+```
+Now change the name of the directory to ```cpp_pubsub```
+```sh
+mv beginner_tutorials cpp_pubsub
+```
 
-    ```sh
-    . install/setup.bash
-    ```
+Now to build the package go to the root of the ROS2 workspace
 
-4. **Run the Publisher Node(talker)**
-    You can now run the custom string publisher node.
+```sh
+cd ~/ros2_ws
+```
 
-    ```sh
-    ros2 run cpp_pubsub talker
-    ```
+check the dependencies
 
-5. **Run the Subscriber Node(listener)**
-    Open a new terminal, navigate to ros2 workspace and run the subscriber node.
+```sh
+rosdep install -i --from-path src --rosdistro humble -y
+```
 
-    ```sh
-    cd ~/ros2_ws
-    . install/setup.bash
-    ros2 run cpp_pubsub listener
-    ```
+and build the package
 
-## References
+```sh
+colcon build --packages-select cpp_pubsub
+```
 
-[1] <https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html>
+  
+
+## Run Instructions
+
+After the successful build, to run open a new terminal,
+
+```sh
+cd ~/ros2_ws
+```
+
+```sh
+. install/setup.bash
+```
+
+### Using the launch file
+
+To run the launch file and initate the publisher, subscriber and the service,
+```sh
+cd ~/ros2_ws/src/cpp_pubsub/launch
+```
+```sh
+ros2 launch launch.yaml frequency:=20.0
+```
+
+### Launch the nodes
+To launch the **publisher** node,
+```sh
+cd ~/ros2_ws
+```
+```sh
+. install/setup.bash
+```
+```sh
+ros2 run cpp_pubsub talker
+```
+To launch the **subscriber** node,
+```sh
+cd ~/ros2_ws
+```
+```sh
+. install/setup.bash
+```
+```sh
+ros2 run cpp_pubsub listener
+```
+To launch the **server** node,
+```sh
+cd ~/ros2_ws
+```
+```sh
+. install/setup.bash
+```
+```sh
+ros2 run cpp_pubsub server
+```
+
+### Change the ```frequency``` parameter
+
+```sh
+ros2 param set \minimal_publisher freq 5.0
+```
+
+
+## Result Screenshots
+
+![Terminal]()
+
+![RQT Log]()
+
+![RQT Graph]()

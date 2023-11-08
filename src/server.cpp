@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
   rclcpp::Service<ModifyMsg>::SharedPtr service =
       node->create_service<ModifyMsg>("modify_msg", &add);
 
-  RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Modifying Msg");
+  RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Server Started.. Modifying Msg");
 
   rclcpp::spin(node);
   rclcpp::shutdown();

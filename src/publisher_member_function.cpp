@@ -53,7 +53,7 @@ class MinimalPublisher : public rclcpp::Node {
         RCLCPP_FATAL(rclcpp::get_logger("rclcpp"), "Interrupted");
         exit(EXIT_FAILURE);
       }
-      RCLCPP_WARN(rclcpp::get_logger("rclcpp"), "Service unavailable");
+      RCLCPP_WARN(rclcpp::get_logger("rclcpp"), "NO SERVICE AVAILABLE, RUN SERVER TO REFLECT THE MODIFICATIONS");
     }
   }
 

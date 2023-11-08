@@ -17,7 +17,7 @@ using ModifyMsg = cpp_pubsub::srv::ModifyMsg;
  */
 void add(const std::shared_ptr<ModifyMsg::Request> request,
          std::shared_ptr<ModifyMsg::Response> response) {
-  response->c = request->a + " " + request->b + " have been added.";
+  response->c = "String has been modified to "+ request->a + "-" + request->b;
 }
 
 /**

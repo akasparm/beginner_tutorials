@@ -74,7 +74,7 @@ colcon build --packages-select cpp_pubsub
 
 ## Run Instructions
 
-After the successful build, to run open a new terminal,
+After the successful build, run below script,
 
 ```sh
 cd ~/ros2_ws
@@ -84,28 +84,14 @@ cd ~/ros2_ws
 . install/setup.bash
 ```
 
-### Using the launch file
-
-To run the launch file and initate the publisher, subscriber and the service,
-```sh
-cd ~/ros2_ws/src/cpp_pubsub/launch
-```
-```sh
-ros2 launch launch.yaml frequency:=20.0
-```
 
 ### Launch the nodes
 To launch the **publisher** node,
-```sh
-cd ~/ros2_ws
-```
-```sh
-. install/setup.bash
-```
+
 ```sh
 ros2 run cpp_pubsub talker
 ```
-To launch the **subscriber** node,
+To launch the **subscriber** node, Open a new terminal and run the below script
 ```sh
 cd ~/ros2_ws
 ```
@@ -115,7 +101,7 @@ cd ~/ros2_ws
 ```sh
 ros2 run cpp_pubsub listener
 ```
-To launch the **server** node,
+To launch the **server** node, Open a new terminal and run the below script
 ```sh
 cd ~/ros2_ws
 ```
@@ -126,7 +112,31 @@ cd ~/ros2_ws
 ros2 run cpp_pubsub server
 ```
 
+### Using the launch file
+
+To run the launch file and initate the publisher, subscriber and the service, Open a new terminal and run the below script
+```sh
+cd ~/ros2_ws
+```
+```sh
+. install/setup.bash
+```
+```sh
+cd ~/ros2_ws/src/cpp_pubsub/launch
+```
+```sh
+ros2 launch launch.yaml frequency:=20.0
+```
+
 ### Change the ```frequency``` parameter
+
+ Open a new terminal and run the below script
+ ```sh
+cd ~/ros2_ws
+```
+```sh
+. install/setup.bash
+```
 
 ```sh
 ros2 param set \minimal_publisher freq 5.0

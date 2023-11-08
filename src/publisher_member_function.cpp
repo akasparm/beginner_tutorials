@@ -71,8 +71,8 @@ class MinimalPublisher : public rclcpp::Node {
   void timer_callback() {
     RCLCPP_INFO_STREAM_ONCE(this->get_logger(), "Node setup");
     auto message = std_msgs::msg::String();
-    message.data = "The count is " + std::to_string(count_++);
-    RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
+    message.data = std::to_string(count_++);
+    RCLCPP_INFO(this->get_logger(), "I am the publisher node: '%s'", message.data.c_str());
     publisher_->publish(message);
     if (count_ % 10 == 0) {
       call_service();

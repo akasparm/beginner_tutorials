@@ -65,6 +65,9 @@ rosdep install -i --from-path src --rosdistro humble -y
 ```
 
 and build the package
+```sh
+source /opt/ros/humble/setup.bash
+```
 
 ```sh
 colcon build --packages-select cpp_pubsub
@@ -75,6 +78,7 @@ colcon build --packages-select cpp_pubsub
 ## Run Instructions
 
 After the successful build, run below script,
+
 
 ```sh
 cd ~/ros2_ws
@@ -145,8 +149,11 @@ ros2 param set \minimal_publisher freq 5.0
 
 ## Result Screenshots
 
-![Terminal]()
+Terminal Snapshot
+![Terminal](results/Terminal.png)
 
-![RQT Log]()
+Logging Informations
+![RQT Log](results/rqt_console.png)
 
-![RQT Graph]()
+RQT node graph
+![RQT Graph](results/rqt_node_graph.png)

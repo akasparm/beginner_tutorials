@@ -1,12 +1,12 @@
 /**
  * @file publisher_member_function.cpp
  * @author Akashkumar parmar (akasparm@umd.edu)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2023-11-08
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 #include <chrono>
 #include <cpp_pubsub/srv/modify_msg.hpp>
@@ -22,8 +22,8 @@ using namespace std::chrono_literals;
 using sharedFuture = rclcpp::Client<cpp_pubsub::srv::ModifyMsg>::SharedFuture;
 
 /**
- * @brief MinimalPublisher class - It defines the publisher(talker node), service client and the
- * associated function
+ * @brief MinimalPublisher class - It defines the publisher(talker node),
+ * service client and the associated function
  *
  */
 class MinimalPublisher : public rclcpp::Node {
@@ -51,7 +51,7 @@ class MinimalPublisher : public rclcpp::Node {
         "freq", parameterCallbackPtr);
 
     publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
-    
+
     // Logging information
     RCLCPP_DEBUG(this->get_logger(), "Publisher is Created");
     auto delta = std::chrono::milliseconds(static_cast<int>((1000 / freq)));
@@ -59,7 +59,7 @@ class MinimalPublisher : public rclcpp::Node {
         delta, std::bind(&MinimalPublisher::timer_callback, this));
 
     client = this->create_client<cpp_pubsub::srv::ModifyMsg>("modify_msg");
-    
+
     // Logging information
     RCLCPP_DEBUG(this->get_logger(), "Client created");
     while (!client->wait_for_service(1s)) {
@@ -69,7 +69,9 @@ class MinimalPublisher : public rclcpp::Node {
         exit(EXIT_FAILURE);
       }
       // Logging information till waiting for the server
-      RCLCPP_WARN(rclcpp::get_logger("rclcpp"), "NO SERVICE AVAILABLE, RUN SERVER TO REFLECT THE MODIFICATIONS");
+      RCLCPP_WARN(
+          rclcpp::get_logger("rclcpp"),
+          "NO SERVICE AVAILABLE, RUN SERVER TO REFLECT THE MODIFICATIONS");
     }
   }
 
@@ -89,7 +91,8 @@ class MinimalPublisher : public rclcpp::Node {
     auto message = std_msgs::msg::String();
     message.data = std::to_string(count_++);
     // Log message when service is available
-    RCLCPP_INFO(this->get_logger(), "I am the publisher node: '%s'", message.data.c_str());
+    RCLCPP_INFO(this->get_logger(), "I am the publisher node: '%s'",
+                message.data.c_str());
     publisher_->publish(message);
     // Call service at the frequency of 10
     if (count_ % 10 == 0) {

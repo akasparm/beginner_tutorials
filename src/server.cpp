@@ -1,12 +1,12 @@
 /**
  * @file server.cpp
  * @author Akashkumar parmar (akasparm@umd.edu)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2023-11-08
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 #include <cpp_pubsub/srv/modify_msg.hpp>
 #include <cstdlib>
@@ -26,7 +26,7 @@ using ModifyMsg = cpp_pubsub::srv::ModifyMsg;
  */
 void add(const std::shared_ptr<ModifyMsg::Request> request,
          std::shared_ptr<ModifyMsg::Response> response) {
-  response->c = "String has been modified to "+ request->a + "-" + request->b;
+  response->c = "String has been modified to " + request->a + "-" + request->b;
 }
 
 /**

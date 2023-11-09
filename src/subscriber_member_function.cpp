@@ -1,12 +1,12 @@
 /**
  * @file subscriber_member_function.cpp
  * @author Akashkumar parmar (akasparm@umd.edu)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2023-11-08
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 #include <functional>
 #include <memory>
@@ -39,7 +39,8 @@ class MinimalSubscriber : public rclcpp::Node {
    */
   void topic_callback(const std_msgs::msg::String& msg) const {
     // Logging information when listener node is active
-    RCLCPP_INFO(this->get_logger(), "I am the listener node: '%s'", msg.data.c_str());
+    RCLCPP_INFO(this->get_logger(), "I am the listener node: '%s'",
+                msg.data.c_str());
   }
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
 };

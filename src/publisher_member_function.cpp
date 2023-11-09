@@ -1,3 +1,13 @@
+/**
+ * @file publisher_member_function.cpp
+ * @author Akashkumar parmar (akasparm@umd.edu)
+ * @brief 
+ * @version 0.1
+ * @date 2023-11-08
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include <chrono>
 #include <cpp_pubsub/srv/modify_msg.hpp>
 #include <functional>
@@ -12,18 +22,18 @@ using namespace std::chrono_literals;
 using sharedFuture = rclcpp::Client<cpp_pubsub::srv::ModifyMsg>::SharedFuture;
 
 /**
- * @brief MinimalPublisher class, defines the publisher, service client and the
+ * @brief MinimalPublisher class - It defines the publisher(talker node), service client and the
  * associated function
  *
  */
 class MinimalPublisher : public rclcpp::Node {
  public:
   /**
-   * @brief Construct a new Minimal Publisher object
+   * @brief Generate an object of MinimalPublisher class
    *
    */
   MinimalPublisher() : Node("minimal_publisher"), count_(0) {
-    // Parameter Declaration
+    // Declare parameters
     auto param_desc = rcl_interfaces::msg::ParameterDescriptor();
     param_desc.description = "Set callback frequency.";
     this->declare_parameter("freq", 2.0, param_desc);
@@ -32,7 +42,7 @@ class MinimalPublisher : public rclcpp::Node {
     RCLCPP_DEBUG(this->get_logger(),
                  "The parameter freq is declared, set to 2.0 hz");
 
-    // creating a subscriber for tthe parameter
+    // Create subscriber for the parameters
     parameter_subscriber_ =
         std::make_shared<rclcpp::ParameterEventHandler>(this);
     auto parameterCallbackPtr =
@@ -41,18 +51,24 @@ class MinimalPublisher : public rclcpp::Node {
         "freq", parameterCallbackPtr);
 
     publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
+    
+    // Logging information
     RCLCPP_DEBUG(this->get_logger(), "Publisher is Created");
     auto delta = std::chrono::milliseconds(static_cast<int>((1000 / freq)));
     timer_ = this->create_wall_timer(
         delta, std::bind(&MinimalPublisher::timer_callback, this));
 
     client = this->create_client<cpp_pubsub::srv::ModifyMsg>("modify_msg");
+    
+    // Logging information
     RCLCPP_DEBUG(this->get_logger(), "Client created");
     while (!client->wait_for_service(1s)) {
+      // Log for interruption
       if (!rclcpp::ok()) {
         RCLCPP_FATAL(rclcpp::get_logger("rclcpp"), "Interrupted");
         exit(EXIT_FAILURE);
       }
+      // Logging information till waiting for the server
       RCLCPP_WARN(rclcpp::get_logger("rclcpp"), "NO SERVICE AVAILABLE, RUN SERVER TO REFLECT THE MODIFICATIONS");
     }
   }
@@ -64,16 +80,18 @@ class MinimalPublisher : public rclcpp::Node {
   std::shared_ptr<rclcpp::ParameterCallbackHandle> parameterHandle_;
 
   /**
-   * @brief timer_callback function, sets the message data and publishes the
-   * message and also calls the service at every 10 counts
+   * @brief Function to set the message data and to publish the
+   * message. It also calls the service at every 10 counts
    *
    */
   void timer_callback() {
     RCLCPP_INFO_STREAM_ONCE(this->get_logger(), "Node setup");
     auto message = std_msgs::msg::String();
     message.data = std::to_string(count_++);
+    // Log message when service is available
     RCLCPP_INFO(this->get_logger(), "I am the publisher node: '%s'", message.data.c_str());
     publisher_->publish(message);
+    // Call service at the frequency of 10
     if (count_ % 10 == 0) {
       call_service();
     }
@@ -87,7 +105,7 @@ class MinimalPublisher : public rclcpp::Node {
   size_t count_;
 
   /**
-   * @brief call_service function, defnies the service parameters and calls the
+   * @brief Function to define the service parameters and to call the
    * response
    *
    * @return int
@@ -96,6 +114,7 @@ class MinimalPublisher : public rclcpp::Node {
     auto request = std::make_shared<cpp_pubsub::srv::ModifyMsg::Request>();
     request->a = "String1";
     request->b = " String2";
+    // Logging information when service is called
     RCLCPP_INFO(this->get_logger(), "Calling Service to Modify string");
     auto callbackPtr =
         std::bind(&MinimalPublisher::response_callback, this, _1);
@@ -104,7 +123,7 @@ class MinimalPublisher : public rclcpp::Node {
   }
 
   /**
-   * @brief response_callback function, calls the response for the call_service
+   * @brief Function to call the response for the call_service
    * function
    *
    * @param future
@@ -116,7 +135,7 @@ class MinimalPublisher : public rclcpp::Node {
   }
 
   /**
-   * @brief parameter_callback function, assigns the updated value of the
+   * @brief Function to assign the updated value of the
    * parameter
    *
    * @param param

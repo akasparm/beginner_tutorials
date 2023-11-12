@@ -15,12 +15,12 @@
 /**
  * @file test.cpp
  * @author Akashkumar Parmar (akasparm@umd.edu)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2023-11-12
- * 
+ *
  * @copyright Copyright (c) 2023
- * 
+ *
  */
 #include <gtest/gtest.h>
 #include <stdlib.h>
@@ -40,7 +40,7 @@ class TaskPublisher : public testing::Test {
 
 /**
  * @brief Construct a new test f object
- * 
+ *
  */
 TEST_F(TaskPublisher, test_num_publishers) {
   test_node_ = rclcpp::Node::make_shared("test_publisher");
@@ -48,7 +48,7 @@ TEST_F(TaskPublisher, test_num_publishers) {
       test_node_->create_publisher<std_msgs::msg::String>("chatter", 10.0);
 
   auto number_of_publishers = test_node_->count_publishers("chatter");
-  
+
   // Check number of publishers
   EXPECT_EQ(1, static_cast<int>(number_of_publishers));
 }

@@ -44,8 +44,6 @@ class TaskPublisher : public testing::Test {
  */
 TEST_F(TaskPublisher, test_num_publishers) {
   test_node_ = rclcpp::Node::make_shared("test_publisher");
-  auto test_pub =
-      test_node_->create_publisher<std_msgs::msg::String>("chatter", 10.0);
 
   auto number_of_publishers = test_node_->count_publishers("chatter");
 

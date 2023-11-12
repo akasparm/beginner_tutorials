@@ -84,8 +84,8 @@ class MinimalPublisher : public rclcpp::Node {
     geometry_msgs::msg::TransformStamped t;
 
     t.header.stamp = this->get_clock()->now();
-    t.header.frame_id = "world"; // Parent "/world"
-    t.child_frame_id = "talk"; // Child "/talk"
+    t.header.frame_id = "world";  // Parent "/world"
+    t.child_frame_id = "talk";    // Child "/talk"
 
     // Translation block
     t.transform.translation.x = 1;
@@ -99,8 +99,6 @@ class MinimalPublisher : public rclcpp::Node {
     t.transform.rotation.w = 0;
 
     tf_static_broadcaster_->sendTransform(t);
-
-
   }
 
  private:

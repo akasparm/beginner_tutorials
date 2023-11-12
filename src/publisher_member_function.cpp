@@ -105,6 +105,7 @@ class MinimalPublisher : public rclcpp::Node {
 
  private:
   std::string Message;
+  std::shared_ptr<tf2_ros::StaticTransformBroadcaster> tf_static_broadcaster_;
   rclcpp::Client<cpp_pubsub::srv::ModifyMsg>::SharedPtr client;
   std::shared_ptr<rclcpp::ParameterEventHandler> parameter_subscriber_;
   std::shared_ptr<rclcpp::ParameterCallbackHandle> parameterHandle_;

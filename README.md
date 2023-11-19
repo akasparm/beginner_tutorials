@@ -74,18 +74,66 @@ colcon build --packages-select cpp_pubsub
 ```
 
   
-
-## Run Instructions
-
-After the successful build, run below script,
-
+## Testing the package
 
 ```sh
 cd ~/ros2_ws
+source install/setup.bash
+colcon test --event-handlers console_direct+ --packages-select cpp_pubsub
+```
+  
+
+## For Checking tf
+
+Open 4 terminals and run ```source install/setup.bash``` in all terminals
+
+### To start static tf publisher
+Terminal 1:
+```sh
+ros2 run cpp_pubsub talker
 ```
 
+### To see the transform on terminal
+Terminal 2:
 ```sh
-. install/setup.bash
+ros2 run tf2_ros tf2_echo world talk
+```
+
+### To store the tf tree
+Terminal 3:
+```sh
+ros2 run cpp_pubsub view_frames
+```
+
+### To record a bag file
+Terminal 4:
+```sh
+cd cpp_pubsub/launch
+ros2 launch cpp_pubsub rosbag_record_launch.xml bag_record:=1
+```
+If the argument ```bag_record``` is set to `0` it won't record. To terminate press `Ctrl+C` on the terminal.
+
+
+### To see info of recorded bag file
+```sh
+cd cpp_pubsub/results
+ros2 bag info all_topics
+```
+
+
+### To play the recorded bag file and see
+run ```source install/setup.bash``` in all terminals
+
+Terminal 1:
+```sh
+cd ~/ros2_ws/
+ros2 run cpp_pubsub listener
+```
+
+Terminal 2:
+```sh
+cd cpp_pubsub/results
+ros2 bag play all_topics
 ```
 
 

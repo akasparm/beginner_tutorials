@@ -1,3 +1,17 @@
+// Copyright 2016 Open Source Robotics Foundation, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 /**
  * @file publisher_member_function.cpp
  * @author Akashkumar parmar (akasparm@umd.edu)
@@ -8,6 +22,10 @@
  * @copyright Copyright (c) 2023
  *
  */
+
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2_ros/static_transform_broadcaster.h>
+
 #include <chrono>
 #include <cpp_pubsub/srv/modify_msg.hpp>
 #include <functional>
@@ -22,7 +40,7 @@ using namespace std::chrono_literals;
 using sharedFuture = rclcpp::Client<cpp_pubsub::srv::ModifyMsg>::SharedFuture;
 
 /**
- * @brief MinimalPublisher class - It defines the publisher(talker node),
+ * @brief MinimalPublisher class to define the publisher(talker node),
  * service client and the associated function
  *
  */
@@ -73,10 +91,33 @@ class MinimalPublisher : public rclcpp::Node {
           rclcpp::get_logger("rclcpp"),
           "NO SERVICE AVAILABLE, RUN SERVER TO REFLECT THE MODIFICATIONS");
     }
+
+    // Broadcast a tf frame
+    tf_static_broadcaster_ =
+        std::make_shared<tf2_ros::StaticTransformBroadcaster>(this);
+    geometry_msgs::msg::TransformStamped t;
+
+    t.header.stamp = this->get_clock()->now();
+    t.header.frame_id = "world";  // Parent "/world"
+    t.child_frame_id = "talk";    // Child "/talk"
+
+    // Translation block
+    t.transform.translation.x = 1;
+    t.transform.translation.y = 2;
+    t.transform.translation.z = 3;
+
+    // Rotation block
+    t.transform.rotation.x = 1;
+    t.transform.rotation.y = 0.5;
+    t.transform.rotation.z = -1;
+    t.transform.rotation.w = 0;
+
+    tf_static_broadcaster_->sendTransform(t);
   }
 
  private:
   std::string Message;
+  std::shared_ptr<tf2_ros::StaticTransformBroadcaster> tf_static_broadcaster_;
   rclcpp::Client<cpp_pubsub::srv::ModifyMsg>::SharedPtr client;
   std::shared_ptr<rclcpp::ParameterEventHandler> parameter_subscriber_;
   std::shared_ptr<rclcpp::ParameterCallbackHandle> parameterHandle_;

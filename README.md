@@ -85,7 +85,7 @@ colcon test --event-handlers console_direct+ --packages-select cpp_pubsub
 
 ## For Checking tf
 
-Open 4 terminals and run ```source install/setup.bash``` in all terminals
+Open 5 terminals and run ```source install/setup.bash``` in all terminals in ```~/ros2_ws/``` directory.
 
 ### To start static tf publisher
 Terminal 1:
@@ -102,13 +102,20 @@ ros2 run tf2_ros tf2_echo world talk
 ### To store the tf tree
 Terminal 3:
 ```sh
-ros2 run cpp_pubsub view_frames
+ros2 run cpp_pubsub server
+```
+
+### To store the tf tree
+Terminal 4:
+```sh
+cd ~/ros2_ws/src/cpp_pubsub/results
+ros2 run tf2_tools view_frames
 ```
 
 ### To record a bag file
-Terminal 4:
+Terminal 5:
 ```sh
-cd cpp_pubsub/launch
+cd ~/ros2_ws/src/cpp_pubsub/launch
 ros2 launch cpp_pubsub rosbag_record_launch.xml bag_record:=1
 ```
 If the argument ```bag_record``` is set to `0` it won't record. To terminate press `Ctrl+C` on the terminal.
@@ -116,7 +123,7 @@ If the argument ```bag_record``` is set to `0` it won't record. To terminate pre
 
 ### To see info of recorded bag file
 ```sh
-cd cpp_pubsub/results
+cd ~/ros2_ws/src/cpp_pubsub/results
 ros2 bag info all_topics
 ```
 
@@ -132,7 +139,7 @@ ros2 run cpp_pubsub listener
 
 Terminal 2:
 ```sh
-cd cpp_pubsub/results
+cd ~/ros2_ws/src/cpp_pubsub/results
 ros2 bag play all_topics
 ```
 

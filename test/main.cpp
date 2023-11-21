@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 #include <gtest/gtest.h>
 
 #include <rclcpp/rclcpp.hpp>
 
-  /**
-    * @brief Main funtion to run all the tests
-    *
-    * @param argc
-    * @param argv
-    * @return int
-    */
+/**
+ * @brief Main funtion to run all the tests
+ *
+ * @param argc
+ * @param argv
+ * @return int
+ */
 int main(int argc, char** argv) {
   rclcpp::init(argc, argv);
   ::testing::InitGoogleTest(&argc, argv);
